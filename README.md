@@ -52,6 +52,10 @@ workflows. Model/audio modes may download models or open audio devices.
 Run the application's `--ui-check` only with a separate `ENGLISH_MEMORY_DATA`
 directory: it creates diagnostic fixtures in the selected database.
 
+Publication verification: the Windows x64 publish completed and all 74 default
+checks passed. Live microphone capture and model inference were not rerun for
+this source publication.
+
 ## Architecture
 
 - `src/EnglishMemory.App`: WinUI 3 views, view models and desktop integration
