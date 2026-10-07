@@ -1,0 +1,18 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="English Memory" Manufacturer="English Memory" Version="0.1.4" UpgradeCode="C31F5898-8482-445A-8EE3-051D539750E9" Scope="perUser" InstallerVersion="500">
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of English Memory is installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <Launch Condition="VersionNT64" Message="English Memory requires 64-bit Windows 11." />
+    <StandardDirectory Id="LocalAppDataFolder"><Directory Id="INSTALLFOLDER" Name="EnglishMemoryApp" /></StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder"><Directory Id="AppPrograms" Name="English Memory">
+      <Component Id="StartMenu" Guid="B37C2048-5A16-4F43-A6C1-73DC87860631">
+        <Shortcut Id="LaunchShortcut" Name="English Memory" Target="[INSTALLFOLDER]EnglishMemory.App.exe" WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemovePrograms" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\EnglishMemory" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </Directory></StandardDirectory>
+    <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER"><Files Include="$(var.PublishDir)\**" /></ComponentGroup>
+    <Feature Id="Main" Title="English Memory" Level="1"><ComponentGroupRef Id="AppFiles"/><ComponentRef Id="StartMenu"/></Feature>
+    <StandardDirectory Id="System64Folder" /><CustomAction Id="RemoveStartup" Directory="System64Folder" ExeCommand="&quot;[System64Folder]reg.exe&quot; delete &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Run&quot; /v EnglishMemory /f" Return="ignore" /><InstallExecuteSequence><Custom Action="RemoveStartup" Before="RemoveFiles" Condition="REMOVE=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE" /></InstallExecuteSequence><Property Id="ARPCOMMENTS" Value="Personal English memory with free local AI. Models download separately." />
+  </Package>
+</Wix>
